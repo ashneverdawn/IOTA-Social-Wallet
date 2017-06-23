@@ -5,6 +5,8 @@ title = "Home"
 +++
 
 <br>
+{{% alert theme="danger" %}}{{% /alert %}}
+
 <form id='create-pass' hidden=true onsubmit='try{createPass();}catch(e){}return false'>
     <p>
         Welcome, new user!<br>
@@ -34,43 +36,47 @@ title = "Home"
 </form>
 
 <script>
-    if(load('hash') === null) {
-        get('create-pass').hidden = false
+    var alert = Util.getByClass("alert alert-danger")[0]
+    alert.setAttribute("hidden", true);
+    
+
+    if(typeof(localStorage["hash"]) === "undefined") {
+        Util.getById('create-pass').hidden = false
     } else {
-        get('login').hidden = false
+        Util.getById('login').hidden = false
     }
     function createPass() {
-        if( get('pass').value === "" ){
-            console.log("enter a password")
+        if( Util.getById('pass').value === "" ){
+            alert.innerHTML = "Enter a password"
+            alert.hidden = false
             return
         }
-        if(get('pass').value !== get('confirm').value) {
-            console.log("passwords don't match")
+        if(Util.getById('pass').value !== Util.getById('confirm').value) {
+            alert.innerHTML = "Passwords don't match"
+            alert.hidden = false
             return
         } 
-        if(get('pass').value === get('confirm').value) {
-            save('hash', {hash : hash512(get('pass').value)})
-            
-            console.log('pass created!')
-            redirectWithPass('./wallets', get('pass').value)
-            /*
-            var enc = encrypt(get('pass').value, "This is my message and it is not very long.")
-            console.log(enc)
-            var dec = decrypt(get('pass').value, enc)
-            console.log(dec)
-            */
+        if(Util.getById('pass').value === Util.getById('confirm').value) {
+            Storage.setPass(Util.getById('pass').value)
+            alert.innerHTML = "Password created!"
+            alert.hidden = false
+            Util.redirectWithParam('./wallets', Util.getById('pass').value)
         }
     }
     function login() {
-        if (load('hash').hash !== hash512(get('login-pass').value)) {
-            console.log('Incorrect password')
+        if (!Storage.auth(Util.getById('login-pass').value)) {
+            alert.innerHTML = "Incorrect password"
+            alert.hidden = false
         } else {
-            console.log('login success!')
-            redirectWithPass('./wallets', get('login-pass').value)
+            alert.innerHTML = "Login success!"
+            alert.hidden = false
+            Util.redirectWithParam('./wallets', Util.getById('login-pass').value)
         }
     }
     function clearData() {
-        localStorage.clear()
-        window.location.reload(false);
+        if(confirm("Are you sure? This will permanently erase all your data!")) {
+            localStorage.clear()
+            window.location.reload(false);
+        }
     }
 </script>

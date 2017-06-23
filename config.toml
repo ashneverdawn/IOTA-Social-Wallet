@@ -2,4 +2,3 @@ baseurl = "https://example.org"
 title = "Iota App"
 theme = "docdock_customized"
 languageCode = "en-us"
-
