@@ -49,7 +49,10 @@ var Storage = (function() {
         }
     }
     function getPass() {
-        return queryString["param"]
+        return decodeURIComponent(queryString["param"])
+    }
+    function getData() {
+        return decodeURIComponent(queryString["data"])
     }
     function init(enc) {
         Encryption = enc
@@ -76,6 +79,7 @@ var Storage = (function() {
     }
 
     return {
+        getData: getData,
         getPass: getPass,
         setPass: setPass,
         auth: auth,

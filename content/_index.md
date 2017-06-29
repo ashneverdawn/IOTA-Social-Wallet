@@ -35,48 +35,5 @@ title = "Home"
     <input type='submit' value='Clear'>
 </form>
 
-<script>
-    var alert = Util.getByClass("alert alert-danger")[0]
-    alert.setAttribute("hidden", true);
-    
 
-    if(typeof(localStorage["hash"]) === "undefined") {
-        Util.getById('create-pass').hidden = false
-    } else {
-        Util.getById('login').hidden = false
-    }
-    function createPass() {
-        if( Util.getById('pass').value === "" ){
-            alert.innerHTML = "Enter a password"
-            alert.hidden = false
-            return
-        }
-        if(Util.getById('pass').value !== Util.getById('confirm').value) {
-            alert.innerHTML = "Passwords don't match"
-            alert.hidden = false
-            return
-        } 
-        if(Util.getById('pass').value === Util.getById('confirm').value) {
-            Storage.setPass(Util.getById('pass').value)
-            alert.innerHTML = "Password created!"
-            alert.hidden = false
-            Util.redirectWithParam('./wallets', Util.getById('pass').value)
-        }
-    }
-    function login() {
-        if (!Storage.auth(Util.getById('login-pass').value)) {
-            alert.innerHTML = "Incorrect password"
-            alert.hidden = false
-        } else {
-            alert.innerHTML = "Login success!"
-            alert.hidden = false
-            Util.redirectWithParam('./wallets', Util.getById('login-pass').value)
-        }
-    }
-    function clearData() {
-        if(confirm("Are you sure? This will permanently erase all your data!")) {
-            localStorage.clear()
-            window.location.reload(false);
-        }
-    }
-</script>
+<script src="../js/index.js" defer></script>

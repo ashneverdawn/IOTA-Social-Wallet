@@ -6,4 +6,11 @@ weight = 3
 alwaysclosed = true
 +++
 
-Lorem Ipsum
+<script src="../js/receive.js" defer></script>
+
+Your receiving address:
+<textarea id="address" disabled="disabled" rows=4></textarea>
+
+Pending:
+
+Confirmed:

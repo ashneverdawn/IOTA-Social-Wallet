@@ -6,4 +6,11 @@ weight = 2
 alwaysclosed = true
 +++
 
-Lorem Ipsum
+<script src="../js/send.js" defer></script>
+
+Send to:
+<textarea id="address" rows=4></textarea>
+Amount:
+<input id="amount"></input>
+<br>
+<button onclick="send()">Send</button>
